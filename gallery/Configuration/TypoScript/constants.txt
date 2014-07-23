@@ -1,0 +1,14 @@
+plugin.tx_gallery {
+	view {
+		# cat=plugin.tx_gallery/file; type=string; label=Path to template root (FE)
+		templateRootPath = EXT:gallery/Resources/Private/Templates/
+		# cat=plugin.tx_gallery/file; type=string; label=Path to template partials (FE)
+		partialRootPath = EXT:gallery/Resources/Private/Partials/
+		# cat=plugin.tx_gallery/file; type=string; label=Path to template layouts (FE)
+		layoutRootPath = EXT:gallery/Resources/Private/Layouts/
+	}
+	persistence {
+		# cat=plugin.tx_gallery//a; type=string; label=Default storage PID
+		storagePid =
+	}
+}

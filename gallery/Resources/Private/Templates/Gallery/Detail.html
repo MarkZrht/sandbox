@@ -1,0 +1,40 @@
+{namespace gallery=Tx_Gallery_ViewHelpers}
+{namespace b=Tx_Basicsettings_ViewHelpers}
+
+<f:layout name="Default" />
+
+<f:section name="content">
+	<f:for each="{gallery.albumPhotos}" as="photo" iteration="photoIteration">
+		<f:if condition="{photoIteration.isFirst}">
+			<f:then>
+				<a href="#/gallery/<b:Base64 value="{gallery.uid}|0|{gallery.folder}|{gallery.title}" type="encode" />" data-href="/typo3conf/ext/basicsettings/Resources/Public/PHP/getGalleryPhotos.php?hash=<b:Base64 value="{gallery.uid}|0|{gallery.folder}|{gallery.title}" type="encode" />" class="load-content">
+					<i class="ajaxloader icon-spin5 animate-spin"></i>
+					<img src="typo3conf/ext/basicsettings/Resources/Public/GFX/placeholder.gif" data-src="{gallery.folder}{photo}" width="380" height="300" alt="{gallery.title}" />
+				</a>
+			</f:then>
+		</f:if>
+	</f:for>
+	<h6 class="block_date">
+		<i class="fa fa-camera"></i>
+		<b:FormatDate date='<f:format.date>{gallery.datetime}</f:format.date>' datepart='day'/> <b:FormatDate date='<f:format.date>{gallery.datetime}</f:format.date>' datepart='month'/> <b:FormatDate date='<f:format.date>{gallery.datetime}</f:format.date>' datepart='year'/>
+	</h6>
+
+	<div class="panel">
+		<ul class="block_gallerystrip">
+			<f:for each="{gallery.albumPhotos}" as="photo" iteration="photoIteration">
+				<gallery:Thumb imgPath="{gallery.folder}{photo}" width="71" height="47" crop="1" />
+				<f:if condition="{photoIteration.index} > 0">
+					<li>
+						<a href="#/gallery/<b:Base64 value="{gallery.uid}|{photoIteration.index}|{gallery.folder}|{gallery.title}" type="encode" />" data-href="/typo3conf/ext/basicsettings/Resources/Public/PHP/getGalleryPhotos.php?hash=<b:Base64 value="{gallery.uid}|{photoIteration.index}|{gallery.folder}|{gallery.title}" type="encode" />" class="load-content">
+							<i class="ajaxloader icon-spin5 animate-spin"></i>
+							<img src="typo3conf/ext/basicsettings/Resources/Public/GFX/placeholder.gif" data-src="fileadmin/gallery/thumbs/<gallery:GetGalleryFolder path='{gallery.folder}'/>-thumb-{photo}" alt="{gallery.title}" />
+						</a>
+					</li>
+				</f:if>
+			</f:for>
+		</ul>
+		<h3>{gallery.title}</h3>
+		<h5 class="subheader"><gallery:CountAlbumPhotos folder="{gallery.folder}" /></h5>
+		<p>{gallery.description}</p>
+	</div>
+</f:section>
